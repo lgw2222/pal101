@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pal Asylum — Palworld 1.0 Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0e1310; --bg-2:#121813; --surface:#171f19; --surface-2:#1c261f;
+    --line:#2a352c; --ivory:#ece5d4; --muted:#93a094; --faint:#5f6d61;
+    --ember:#e8843c; --ember-soft:#f0a869; --sphere:#4fb0d0;
+    --leaf:#8dc456; --warn:#e0a24c; --violet:#b58bd8; --gold:#e6c53f;
+
+    /* elements */
+    --fire:#e8663c; --water:#4a9fe0; --grass:#7fb84a; --electric:#e6c53f;
+    --ground:#c99a5a; --ice:#7fd0e8; --dragon:#b07fd8; --dark:#9a8fb0; --neutral:#c3bcaa;
+
+    /* jobs */
+    --j-kindling:#e8843c; --j-mining:#c9a15a; --j-handiwork:#4fb0d0; --j-electric:#e6c53f;
+    --j-planting:#7fb84a; --j-watering:#4fc0a8; --j-gathering:#a4cf6a; --j-lumbering:#b08a5a;
+    --j-medicine:#b58bd8; --j-cooling:#7fc8e8; --j-transport:#d8b77a; --j-ranch:#e0a96d;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+  body{margin:0;color:var(--ivory);line-height:1.5;-webkit-font-smoothing:antialiased;
+    font-family:"Inter",system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1100px 600px at 88% -10%, rgba(232,132,60,.10), transparent 60%),
+               radial-gradient(900px 500px at -5% 8%, rgba(79,176,208,.07), transparent 55%), var(--bg);}
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 18px;}
+
+  /* ---------- sticky nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(14,19,16,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:10px 12px;
+    -ms-overflow-style:none;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav a{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.04em;color:var(--muted);
+    text-decoration:none;padding:7px 12px;border-radius:8px;white-space:nowrap;transition:.15s;}
+  .nav a:hover{color:var(--ivory);background:var(--surface);}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:44px 0 26px;}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ember);margin:0 0 12px;}
+  h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(34px,8vw,64px);
+    line-height:1;letter-spacing:-.02em;margin:0;}
+  h1 .sub{display:block;color:var(--muted);font-weight:600;font-size:clamp(15px,3.2vw,20px);letter-spacing:0;margin-top:12px;}
+  .lede{color:var(--muted);max-width:64ch;margin:18px 0 0;font-size:15px;}
+  .patch{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:"Space Mono",monospace;
+    font-size:12px;color:var(--ember-soft);background:rgba(232,132,60,.08);border:1px solid rgba(232,132,60,.28);padding:6px 11px;border-radius:999px;}
+  .patch b{color:var(--ember);}
+
+  /* ---------- sections ---------- */
+  section{padding:34px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 6px;}
+  .sec-num{font-family:"Space Mono",monospace;font-size:12px;color:var(--faint);font-weight:700;}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(22px,4.5vw,32px);letter-spacing:-.01em;margin:0;}
+  .sec-sub{color:var(--muted);font-size:14px;margin:8px 0 22px;max-width:70ch;}
+  .sec-sub b{color:var(--ivory);font-weight:600;}
+
+  /* ---------- shared bits ---------- */
+  .pl{color:var(--ivory);text-decoration:none;border-bottom:1px dotted rgba(236,229,212,.35);font-weight:600;transition:.15s;white-space:nowrap;}
+  .pl:hover{color:var(--sphere);border-color:var(--sphere);}
+  .loc{display:inline-flex;align-items:center;gap:8px;font-family:"Space Mono",monospace;font-size:12.5px;font-weight:700;
+    color:var(--sphere);text-decoration:none;white-space:nowrap;background:rgba(79,176,208,.07);
+    border:1px solid rgba(79,176,208,.28);padding:6px 10px;border-radius:8px;transition:.15s;}
+  .loc:hover{background:rgba(79,176,208,.16);border-color:var(--sphere);}
+  .loc .arrow{opacity:.6;font-weight:400;}
+  .loc.faint{color:var(--muted);background:rgba(147,160,148,.06);border-color:var(--line);}
+
+  .badge{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;padding:3px 8px;border-radius:5px;}
+  .el-fire{background:rgba(232,102,60,.16);color:var(--fire);}
+  .el-water{background:rgba(74,159,224,.16);color:var(--water);}
+  .el-grass{background:rgba(127,184,74,.16);color:var(--grass);}
+  .el-electric{background:rgba(230,197,63,.16);color:var(--electric);}
+  .el-ground{background:rgba(201,154,90,.16);color:var(--ground);}
+  .el-ice{background:rgba(127,208,232,.16);color:var(--ice);}
+  .el-dragon{background:rgba(176,127,216,.16);color:var(--dragon);}
+  .el-dark{background:rgba(154,143,176,.18);color:var(--dark);}
+  .el-neutral{background:rgba(195,188,170,.14);color:var(--neutral);}
+
+  /* thumbnails */
+  .thumb{width:44px;height:44px;flex:none;border-radius:9px;object-fit:cover;background:var(--surface-2);
+    border:1px solid var(--line);display:inline-block;vertical-align:middle;}
+  .thumb.mono{display:inline-flex;align-items:center;justify-content:center;font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:800;font-size:18px;color:#12140f;border:none;}
+  .palrow{display:flex;gap:12px;align-items:flex-start;}
+  .thumb.sm{width:34px;height:34px;border-radius:7px;}
+  .thumb.sm.mono{font-size:14px;}
+
+  /* ---------- controls ---------- */
+  .controls{margin:0 0 18px;display:flex;flex-direction:column;gap:14px;}
+  .search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px;transition:.15s;}
+  .search:focus-within{border-color:var(--ember);box-shadow:0 0 0 3px rgba(232,132,60,.14);}
+  .search svg{flex:none;color:var(--faint);}
+  .search input{flex:1;background:none;border:none;outline:none;color:var(--ivory);font-family:"Inter",sans-serif;font-size:15px;min-width:0;}
+  .search input::placeholder{color:var(--faint);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-family:"Space Mono",monospace;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);
+    padding:6px 12px;border-radius:999px;cursor:pointer;transition:.15s;user-select:none;}
+  .chip:hover{color:var(--ivory);border-color:var(--faint);}
+  .chip[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:#1a1207;font-weight:700;}
+  .count{font-family:"Space Mono",monospace;font-size:12px;color:var(--faint);margin:0 2px 10px;}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:separate;border-spacing:0;}
+  thead th{text-align:left;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--faint);padding:0 14px 10px;border-bottom:1px solid var(--line);}
+  tbody td{padding:14px;border-bottom:1px solid var(--line);vertical-align:top;background:var(--surface);}
+  tbody tr td:first-child{border-left:3px solid var(--rowc,var(--line));border-top-left-radius:10px;border-bottom-left-radius:10px;}
+  tbody tr td:last-child{border-top-right-radius:10px;border-bottom-right-radius:10px;}
+  tbody tr:hover td{background:var(--surface-2);}
+  .pal{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em;}
+  .pal a{border-bottom:1px dotted rgba(236,229,212,.35);text-decoration:none;}
+  .pal a:hover{color:var(--sphere);border-color:var(--sphere);}
+  .note{color:var(--muted);font-size:12.5px;margin-top:4px;max-width:32ch;}
+  .note b{color:var(--ivory);font-weight:600;}
+  .job{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ivory);}
+  .dot{width:9px;height:9px;border-radius:2px;flex:none;background:var(--jc,var(--line));box-shadow:0 0 8px var(--jc);}
+  .lv{display:block;color:var(--faint);font-family:"Space Mono",monospace;font-size:11px;margin-top:5px;}
+  .where{color:var(--muted);font-size:13px;max-width:24ch;}
+  .maptag{display:block;font-family:"Space Mono",monospace;font-size:10px;color:var(--faint);margin-top:6px;}
+  .breed{font-family:"Space Mono",monospace;font-size:12px;line-height:1.35;font-weight:700;color:var(--muted);}
+  .breed .kind{display:inline-block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:2px 6px;border-radius:5px;margin-bottom:5px;}
+  .breed.combo{color:var(--leaf);} .breed.combo .kind{background:rgba(141,196,86,.14);color:var(--leaf);}
+  .breed.self{color:var(--warn);} .breed.self .kind{background:rgba(224,162,76,.14);color:var(--warn);}
+  .breed.raid{color:var(--violet);} .breed.raid .kind{background:rgba(181,139,216,.16);color:var(--violet);}
+  .breed.catch .kind,.breed.calc .kind{background:rgba(147,160,148,.12);color:var(--muted);}
+  .breed.catch .val,.breed.calc .val{color:var(--muted);font-weight:400;}
+  .empty{text-align:center;color:var(--muted);padding:40px 10px;display:none;}
+
+  /* ---------- cards ---------- */
+  .grid{display:grid;gap:12px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .card h3{font-family:"Bricolage Grotesque",sans-serif;font-size:16px;margin:0 0 4px;}
+  .card .k{font-family:"Space Mono",monospace;font-size:11px;color:var(--faint);letter-spacing:.06em;}
+
+  /* rankings */
+  .rank{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--jc,var(--line));border-radius:12px;padding:14px 16px;}
+  .rank h3{font-family:"Bricolage Grotesque",sans-serif;font-size:15px;margin:0 0 10px;display:flex;align-items:center;gap:8px;}
+  .rank ol{margin:0;padding:0;list-style:none;counter-reset:r;}
+  .rank li{counter-increment:r;display:flex;gap:10px;align-items:baseline;padding:4px 0;font-size:14px;}
+  .rank li::before{content:counter(r);font-family:"Space Mono",monospace;font-size:11px;color:var(--faint);font-weight:700;min-width:14px;}
+  .rank li .lvl{margin-left:auto;font-family:"Space Mono",monospace;font-size:11px;color:var(--faint);}
+
+  /* type chart */
+  .typegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .typecard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;}
+  .typecard .th{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .typecard .tn{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:16px;}
+  .typerow{display:flex;gap:8px;font-size:12px;margin:5px 0;align-items:center;}
+  .typerow .lab{font-family:"Space Mono",monospace;font-size:10px;color:var(--faint);min-width:60px;letter-spacing:.06em;}
+  .strong-c{color:var(--leaf);} .weak-c{color:var(--warn);}
+
+  /* tower */
+  .tower{display:flex;flex-wrap:wrap;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--tc,var(--line));border-radius:12px;padding:14px 16px;}
+  .tower .idx{font-family:"Space Mono",monospace;font-weight:700;color:var(--faint);font-size:13px;}
+  .tower .who{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16px;min-width:150px;}
+  .tower .who .lvl{display:block;font-family:"Space Mono",monospace;font-size:11px;color:var(--faint);font-weight:400;}
+  .tower .vs{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);}
+  .tower .cnt{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12.5px;}
+  .tower .cnt b{color:var(--ivory);}
+
+  ul.tips{list-style:none;padding:0;margin:0;display:grid;gap:10px;}
+  ul.tips li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-size:13.5px;color:var(--muted);}
+  ul.tips li b{color:var(--ivory);font-weight:600;}
+
+  .maplink{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:20px;}
+  .maplink .btn{font-family:"Space Mono",monospace;font-size:13px;font-weight:700;color:#1a1207;background:var(--ember);
+    padding:11px 18px;border-radius:10px;text-decoration:none;transition:.15s;}
+  .maplink .btn:hover{background:var(--ember-soft);}
+  .maplink p{margin:0;color:var(--muted);font-size:13.5px;flex:1;min-width:220px;}
+
+  .foot-note{color:var(--faint);font-size:12px;font-family:"Space Mono",monospace;margin-top:14px;}
+  footer{padding:30px 0 70px;color:var(--faint);font-size:12px;font-family:"Space Mono",monospace;text-align:center;line-height:1.8;}
+  footer a{color:var(--muted);}
+
+  @media(max-width:820px){
+    .g2,.g3,.typegrid{grid-template-columns:1fr;}
+    thead{display:none;}
+    table,tbody,tr,td{display:block;width:100%;}
+    tbody tr{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--rowc,var(--line));
+      border-radius:12px;margin-bottom:12px;padding:4px 2px;}
+    tbody td{border:none!important;padding:8px 15px;border-radius:0!important;background:transparent;}
+    tbody tr:hover td{background:transparent;}
+    tbody td:first-child{padding-top:14px;} tbody td:last-child{padding-bottom:16px;}
+    td[data-label]::before{content:attr(data-label);display:block;font-family:"Space Mono",monospace;font-size:10px;
+      letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:5px;}
+    td.c-pal::before{display:none;}
+    .note,.where{max-width:none;}
+    .tower .cnt{margin-left:0;width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a href="#map">Map</a>
+  <a href="#workers">Base Workers</a>
+  <a href="#ranks">Rankings</a>
+  <a href="#types">Type Chart</a>
+  <a href="#towers">Towers</a>
+  <a href="#breeding">Breeding</a>
+  <a href="#passives">Passives</a>
+  <a href="#food">Food</a>
+  <a href="#fishing">Fishing</a>
+  <a href="#tips">Tips</a>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Palworld 1.0 · Pal Asylum</p>
+    <h1>Field Guide<span class="sub">Everything for running the server — workers, breeding, combat, food & maps</span></h1>
+    <p class="lede">A complete Palworld 1.0 reference. Every <b>Pal name links to its picture &amp; stats</b>, and every <b>coordinate opens the interactive map</b> on the exact spot. Built for the crew.</p>
+    <div class="patch">Updated for <b>1.0</b> · work suitability to Lv 10 · 9 tower bosses · fishing overhaul</div>
+  </header>
+
+  <!-- ============ MAP ============ -->
+  <section id="map">
+    <div class="sec-head"><span class="sec-num">01</span><h2>The Map</h2></div>
+    <p class="sec-sub">The full interactive map has every Pal spawn, Alpha, tower, dungeon, fishing spot and fast-travel point with exact coordinates. It can't be embedded directly here, but every coordinate chip on this page opens it on the right spot.</p>
+    <div class="maplink">
+      <p>45,000+ marker interactive map — search any Pal, filter day/night, and read exact coordinates. This is the same map every coordinate link below points to.</p>
+      <a class="btn" href="https://palworld-map.com/" target="_blank" rel="noopener">Open full map ↗</a>
+    </div>
+    <p class="foot-note">Tip: tap any blue coordinate anywhere on this page to jump straight to that Pal or place.</p>
+  </section>
+
+  <!-- ============ BASE WORKERS ============ -->
+  <section id="workers">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Best Base Worker per Job</h2></div>
+    <p class="sec-sub">The single best Pal for each of the 12 base jobs — where it lives, its level, and how to breed it. <b>Tap a name</b> for its picture &amp; stats, <b>tap a coordinate</b> for the map.</p>
+    <div class="controls">
+      <label class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search" type="search" placeholder="Search a Pal, job, or place…" autocomplete="off" />
+      </label>
+      <div class="chips" id="chips"></div>
+    </div>
+    <p class="count" id="count"></p>
+    <table>
+      <thead><tr><th>Pal</th><th>Job · Level</th><th>Where</th><th>Coordinates</th><th>Breeding</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty">No Pals match that search.</p>
+  </section>
+
+  <!-- ============ RANKINGS ============ -->
+  <section id="ranks">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Ranked: Top 3 per Job</h2></div>
+    <p class="sec-sub">Quick tier view — the strongest options for each work suitability, best first. Level 8 specialists (new in 1.0) top the three most-used jobs.</p>
+    <div class="grid g3" id="ranksGrid"></div>
+  </section>
+
+  <!-- ============ TYPE CHART ============ -->
+  <section id="types">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Element Type Chart</h2></div>
+    <p class="sec-sub">Hitting a Pal with the element it's weak to deals bonus damage; the reverse is halved, so leading with the right element can swing a fight several-fold. <b>Fire</b> is the only element strong against two types; <b>Neutral</b> has no strength and only Dark beats it. Dual-type Pals can be hit through either element.</p>
+    <div class="typegrid" id="typeGrid"></div>
+  </section>
+
+  <!-- ============ TOWERS ============ -->
+  <section id="towers">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Tower Bosses &amp; Counters</h2></div>
+    <p class="sec-sub">Nine towers in 1.0, in level order. The timer is now <b>5 minutes</b> (down from 10) with lower boss HP, so the right counter element and burst damage matter more than ever. <b>Tap a boss Pal</b> for its page, <b>tap coordinates</b> for the tower on the map.</p>
+    <div class="grid" id="towerGrid" style="gap:12px;"></div>
+  </section>
+
+  <!-- ============ BREEDING ============ -->
+  <section id="breeding">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Breeding</h2></div>
+    <p class="sec-sub">Breeding Farm unlocks at <b>level 19</b>. Put a male + female in with a Cake and an egg appears — but the child isn't random.</p>
+
+    <div class="grid g2" style="margin-bottom:14px;">
+      <div class="card">
+        <h3>The one rule: Combi Rank</h3>
+        <p style="color:var(--muted);font-size:13.5px;margin:6px 0 0;">Every Pal has a hidden <b style="color:var(--ivory)">combi rank</b> (breeding power) — rare Pals are low, common chaff like Lamball runs to ~3,100. The game <b style="color:var(--ivory)">averages the two parents' ranks</b> and hatches the Pal whose rank is closest. That's why hundreds of pairs can make the same Pal. Don't memorize combos — work backwards in a calculator. <b style="color:var(--ivory)">Fixed "unique combos"</b> (Vanwyrm + Cinnamoth → Anubis) ignore the math entirely.</p>
+      </div>
+      <div class="card">
+        <h3>Passive inheritance</h3>
+        <p style="color:var(--muted);font-size:13.5px;margin:6px 0 0;">A child has up to <b style="color:var(--ivory)">4 passive slots</b>, pulled from the parents' combined pool plus some random rolls. Keep the parents' combined <b style="color:var(--ivory)">wanted passives at exactly four</b> (a 2/2, 1/3 or 0/4 split) for the cleanest odds, and use clean 0-passive mates to isolate a trait. No duplicates. Legend only comes from Legendaries — breed it to transfer.</p>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>The five cakes</h3>
+        <ul style="margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:13px;">
+          <li><b style="color:var(--ivory)">Cake</b> — normal egg, no bonus</li>
+          <li><b style="color:var(--ivory)">Mushroom Cake</b> (tech 30) — better stats/potential</li>
+          <li><b style="color:var(--ivory)">Veggie Cake</b> (tech 47) — two eggs at once</li>
+          <li><b style="color:var(--ivory)">Deluxe/Exquisite Veggie</b> (tech 60) — mutation ~3%</li>
+          <li><b style="color:var(--ivory)">Special Cake</b> (tech 74) — boosts passive inheritance</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Mutations (new)</h3>
+        <p style="color:var(--muted);font-size:13.5px;margin:6px 0 0;">~0.5–1% per egg (up to ~3% with Deluxe Veggie). The egg is <b style="color:var(--ivory)">purple with strange patterns</b>, and the hatch comes with <b style="color:var(--ivory)">90–100 IVs</b> and at least two rainbow passives — sometimes a completely different, stronger Pal than the parents. <a class="pl" style="border-color:var(--sphere);color:var(--sphere)" href="https://palworld-map.com/database/pals/aegidron" target="_blank" rel="noopener">Aegidron</a> often hatches this way early.</p>
+      </div>
+    </div>
+    <div style="margin-top:14px;"><a class="loc" href="https://game8.co/games/Palworld/archives/440530" target="_blank" rel="noopener">Open full breeding calculator <span class="arrow">↗</span></a></div>
+  </section>
+
+  <!-- ============ PASSIVES ============ -->
+  <section id="passives">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Best Passive Traits</h2></div>
+    <p class="sec-sub">Traits roll randomly on catch, hatch or breed. Max 4 slots, no duplicates. Breed the ones you want onto your keepers.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>⚔️ Combat</h3>
+        <div class="rank" style="border-color:var(--ember);border-left-width:3px;margin-top:8px;padding:0;background:transparent;border:none;">
+          <ol>
+            <li><b>Legend</b> — +20% Atk / Def / Move (Legendaries only; breed to pass) <span class="lvl">S</span></li>
+            <li><b>Immortality</b> — +15% Atk, +100% regen, 5% lifesteal, no downside <span class="lvl">S</span></li>
+            <li><b>Musclehead</b> — +30% Atk, −50% Work (fighters only) <span class="lvl">A</span></li>
+            <li><b>Ferocious</b> — +20% Atk, no penalty <span class="lvl">A</span></li>
+            <li><b>Element booster</b> — e.g. Lord of the Sea, +20% element dmg <span class="lvl">A</span></li>
+          </ol>
+        </div>
+        <p class="k" style="margin-top:10px;">Best stack: Legend + Musclehead + Ferocious + element booster (≈ +74% attack). Never put Musclehead on a base worker.</p>
+      </div>
+      <div class="card">
+        <h3>🛠️ Work</h3>
+        <div class="rank" style="padding:0;background:transparent;border:none;">
+          <ol>
+            <li><b>Artisan</b> — +50% Work Speed (grab first, cheap) <span class="lvl">S</span></li>
+            <li><b>Lucky</b> — boosts work + combat, no downside <span class="lvl">S</span></li>
+            <li><b>Remarkable Craftsmanship</b> — +75% Work Speed <span class="lvl">A</span></li>
+            <li><b>Work Slave / Serious</b> — work speed + endurance <span class="lvl">A</span></li>
+            <li><b>Demon's Hand</b> — +90% Work Speed <span class="lvl">A</span></li>
+          </ol>
+        </div>
+        <p class="k" style="margin-top:10px;">Named stack: Artisan + Work Slave + Serious + Lucky (≈ +135% work speed). All-rounder pick: Lucky + Legend.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOD ============ -->
+  <section id="food">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Best Food &amp; the Meta</h2></div>
+    <p class="sec-sub"><b>Food buffs don't stack</b> — a new dish replaces the old one, and most last ~10 minutes and apply to Pals and you. So meal choice is a loadout: work food at base, attack food before a boss, defense food when you'll get hit.</p>
+    <div class="grid g3" id="foodGrid"></div>
+    <ul class="tips" style="margin-top:14px;">
+      <li><b>Minestrone</b> is the workhorse — <b>+40% Work Speed</b> and every ingredient (2× Tomato, 2× Carrot, 2× Onion, 1× Potato) grows in your fields. Mass-produce it at the Electric Kitchen.</li>
+      <li><b>Pizza</b> is the endgame base food: the strongest combined Work Speed + Sanity recovery, so Pals stay fast and happy longer.</li>
+    </ul>
+  </section>
+
+  <!-- ============ FISHING ============ -->
+  <section id="fishing">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Fishing &amp; Best Spots</h2></div>
+    <p class="sec-sub">Fishing (unlocks tech 15) catches Water Pals without spheres and pulls schematics, Pal Souls, and gold. Cast at a shadow and keep the fish in the green bar. Watch the sparkles: <span class="strong-c">green</span> = guaranteed Rainbow passive · <span style="color:var(--violet)">purple</span> = Alpha with a Gold passive · <span style="color:var(--violet)">purple geyser</span> = the Lunker passive. The Advanced Rod with the Depresso lure is best.</p>
+    <p class="sec-sub" style="margin-top:-8px;">Best fishing helpers: <span id="fishPals"></span></p>
+    <table>
+      <thead><tr><th>Spot</th><th>Tier</th><th>Coordinates</th></tr></thead>
+      <tbody id="fishRows"></tbody>
+    </table>
+  </section>
+
+  <!-- ============ TIPS ============ -->
+  <section id="tips">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Overall Tips</h2></div>
+    <ul class="tips">
+      <li><b>Specialize your base.</b> One Pal at Lv 8 in a single job beats one at Lv 3 across five — and it condenses far better. Lock each to a station with the <b>Monitoring Stand</b> so it never wanders.</li>
+      <li><b>Condensing is cheap now.</b> Max rank (4★) takes <b>48 copies</b> instead of 116. Each star raises one work suitability from the top down; 4★ raises them all by one. Keep spare copies of your specialists as fodder.</li>
+      <li><b>Capture bonus finishes in 5 catches</b> (was 12), so grabbing 5–10 of a species for stats + condense fodder is fast. Sparkling fishing shadows and Alphas are the shortcut to Rainbow/Gold passives.</li>
+      <li><b>Breed, don't hunt, when you can.</b> A fixed combo like Vanwyrm + Cinnamoth → <span class="pl">Anubis</span> arrives long before you could catch the Lv 47 desert Alpha.</li>
+      <li><b>Gear for the biome.</b> Heat armor for Mount Obsidian (Axel) and the volcanic Feybreak pools; cold armor for the ice regions (Victor, Bjorn). The biome damages you before the boss does.</li>
+      <li><b>Towers gate the story.</b> Clearing all 8 faction towers gives the Key Spheres that open the World Tree finale. Each also drops Ancient Tech Points and a fast-travel point.</li>
+      <li><b>Puffolt is a base multiplier</b> — its partner skill gives +1 Generating Electricity to every Pal at the base. Pair it with an electric-powered production line.</li>
+      <li><b>Feed good food + build the work-speed structures</b> (up to +20%). Combined with Artisan/Work Slave passives, base output compounds hard.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Pal / location links → <a href="https://palworld-map.com/" target="_blank" rel="noopener">palworld-map.com</a> · breeding → <a href="https://game8.co/games/Palworld/archives/440530" target="_blank" rel="noopener">Game8</a><br/>
+    Coordinates are approximate in-game values — 1.0 moved several spawns, so the map link is the source of truth.<br/>
+    Fan reference, not affiliated with Pocketpair · Built for Pal Asylum 🔥
+  </footer>
+</div>
+
+<script>
+const MAPQ = "https://palworld-map.com/map?map=main&q=";
+const DB = "https://palworld-map.com/database/pals/";
+const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+const pl = n => `<a class="pl" href="${DB}${slug(n)}" target="_blank" rel="noopener">${n}</a>`;
+const palImg = n => `https://palworld.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(n.trim()+' menu.png')}`;
+const thumb = (n,c,sm) => `<img class="thumb${sm?' sm':''}" src="${palImg(n)}" alt="${n}" loading="lazy" data-l="${n.trim()[0]}" data-c="${c}" data-sm="${sm?1:0}">`;
+function wireThumbs(){
+  document.querySelectorAll('img.thumb').forEach(img=>{
+    const fb=()=>{const s=document.createElement('span');s.className='thumb mono'+(img.dataset.sm==='1'?' sm':'');s.style.background=img.dataset.c;s.textContent=img.dataset.l;img.replaceWith(s);};
+    img.onerror=fb;
+    if(img.complete && img.naturalWidth===0) fb();
+  });
+}
+const coord = (c,q) => c
+  ? `<a class="loc" href="${MAPQ}${encodeURIComponent(q)}" target="_blank" rel="noopener">${c}<span class="arrow">↗</span></a><span class="maptag">Open on map</span>`
+  : `<a class="loc faint" href="${MAPQ}${encodeURIComponent(q)}" target="_blank" rel="noopener">Find on map<span class="arrow">↗</span></a><span class="maptag">Coordinate-only region</span>`;
+
+/* ---------- jobs + workers ---------- */
+const JOBS={kindling:{l:"Kindling",c:"var(--j-kindling)"},handiwork:{l:"Handiwork",c:"var(--j-handiwork)"},
+  mining:{l:"Mining",c:"var(--j-mining)"},electric:{l:"Electricity",c:"var(--j-electric)"},
+  planting:{l:"Planting",c:"var(--j-planting)"},watering:{l:"Watering",c:"var(--j-watering)"},
+  gathering:{l:"Gathering",c:"var(--j-gathering)"},lumbering:{l:"Lumbering",c:"var(--j-lumbering)"},
+  medicine:{l:"Medicine",c:"var(--j-medicine)"},cooling:{l:"Cooling",c:"var(--j-cooling)"},
+  transport:{l:"Transporting",c:"var(--j-transport)"},ranch:{l:"Ranch",c:"var(--j-ranch)"}};
+const KIND={combo:"Combo",self:"Self only",raid:"Raid",catch:"Catch",calc:"Calc target"};
+
+const PALS=[
+ {name:"Anubis",job:"handiwork",suit:"Handiwork Lv4 · Mining Lv3",level:"~Lv 47 Alpha",where:"Twilight Dunes — foot of the Anubis Statue",coord:"-134, -93",bt:"combo",breed:"Vanwyrm + Cinnamoth",note:"Best early all-rounder."},
+ {name:"Solenne",job:"handiwork",suit:"Handiwork Lv8 (new)",level:"~Lv 78 Alpha",where:"World Tree — western edge",coord:null,bt:"catch",breed:"or calc target (63 combos)",note:"Fastest crafter in the game."},
+ {name:"Jormuntide Ignis",job:"kindling",suit:"Kindling Lv7",level:"~Lv 50 · rare spawn",where:"Emberstone Plateau — lava pools, Feybreak",coord:"-720, -1194",bt:"combo",breed:"Jormuntide + Blazehowl",note:"A fire mount too."},
+ {name:"Renjishi",job:"kindling",suit:"Kindling Lv8 (new)",level:"Lv 78 Alpha",where:"World Tree — E of Corroded Hollow",coord:"56, 838",bt:"catch",breed:"or calc target",note:"Only Lv 8 Kindling Pal."},
+ {name:"Aegidron",job:"mining",suit:"Mining Lv8 (new)",level:"Lv 79 Alpha",where:"World Tree — near Celesdir Noct",coord:"~-60, 777",bt:"calc",breed:"often from Mutated Eggs",note:"Top dedicated miner."},
+ {name:"Blazamut",job:"mining",suit:"Mining Lv4",level:"~Lv 52 Alpha",where:"Mount Obsidian — NE of the Trail travel point",coord:"-736, -332",bt:"catch",breed:"or Huge Scorching Egg",note:"Spawn shifted in 1.0."},
+ {name:"Orserk",job:"electric",suit:"Electricity Lv4",level:"~Lv 50+",where:"World Tree / Nature Sanctuary No. 3 (NE)",coord:null,bt:"self",breed:"2× Orserk (1.0 change)",note:"Puffolt buffs all Pals +1 Electricity."},
+ {name:"Lyleen",job:"planting",suit:"Planting Lv4",level:"Lv 58 Alpha",where:"Grassland Alpha (Bamboo Groves)",coord:null,bt:"self",breed:"2× Lyleen (1.0 change)",note:"Also Handiwork/Medicine/Gathering."},
+ {name:"Jormuntide",job:"watering",suit:"Watering Lv4",level:"Lv 55 Alpha",where:"Lake near the Altar of the Windcaller",coord:"350, -85",bt:"calc",breed:"calc target (~20 pairs)",note:"Water/Dragon — not the Ignis."},
+ {name:"Frostallion Noct",job:"gathering",suit:"Gathering Lv4",level:"Lv 65 Alpha",where:"Far-north ice region",coord:null,bt:"calc",breed:"calc target",note:"Legendary. Pair with a planter."},
+ {name:"Celesdir",job:"lumbering",suit:"Lumbering Lv4",level:"~Lv 60 Alpha",where:"Feybreak Island Alpha",coord:"-965, -1176",bt:"catch",breed:"or calc target",note:"Prixter is a cheap Lv 3 alt."},
+ {name:"Bellanoir",job:"medicine",suit:"Medicine Lv4",level:"Raid boss",where:"Summoned raid — no wild spawn",coord:null,bt:"raid",breed:"hatch dark egg",note:"Catchable alt: Selyne."},
+ {name:"Frostallion",job:"cooling",suit:"Cooling Lv4",level:"Lv 60 Alpha",where:"Land of Absolute Zero — far-north ice",coord:"-238, 493",bt:"self",breed:"2× Frostallion (Legend)",note:"Legendary flying mount."},
+ {name:"Wumpo",job:"transport",suit:"Transporting Lv4",level:"Lv 40+",where:"Astral Mountains — far north",coord:null,bt:"catch",breed:"or calc target",note:"Weak hauling bottlenecks the base."},
+ {name:"Vixy",job:"ranch",suit:"Ranch — Spheres, Arrows, Gold",level:"~Lv 3–5",where:"Windswept Hills — early grasslands",coord:null,bt:"catch",breed:"just catch — common",note:"Ranch it on day one."},
+];
+
+const rowsEl=document.getElementById('rows'),emptyEl=document.getElementById('empty'),countEl=document.getElementById('count'),chipsEl=document.getElementById('chips'),searchEl=document.getElementById('search');
+let activeJob="all",query="";
+[["all","All jobs"]].concat(Object.keys(JOBS).map(k=>[k,JOBS[k].l])).forEach(([key,label])=>{
+  const b=document.createElement('button');b.className='chip';b.textContent=label;b.setAttribute('aria-pressed',key==="all"?"true":"false");
+  b.onclick=()=>{activeJob=key;[...chipsEl.children].forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');renderWorkers();};
+  chipsEl.appendChild(b);
+});
+function breedCell(p){const label=(p.bt==="calc")?"Catch / calc":KIND[p.bt];return `<div class="breed ${p.bt}"><span class="kind">${label}</span><span class="val">${p.breed}</span></div>`;}
+function renderWorkers(){
+  const q=query.trim().toLowerCase();
+  const list=PALS.filter(p=>{const jobOk=activeJob==="all"||p.job===activeJob;
+    const t=(p.name+" "+p.suit+" "+p.where+" "+p.breed+" "+JOBS[p.job].l).toLowerCase();return jobOk&&(q===""||t.includes(q));});
+  rowsEl.innerHTML=list.map(p=>{const c=JOBS[p.job].c;return `<tr style="--rowc:${c}">
+    <td class="c-pal" style="--jc:${c}"><div class="palrow">${thumb(p.name,c)}<div><div class="pal">${pl(p.name)}</div><div class="note">${p.note}</div></div></div></td>
+    <td data-label="Job · Level"><span class="job" style="--jc:${c}"><span class="dot"></span>${p.suit}</span><span class="lv">${p.level}</span></td>
+    <td data-label="Where"><div class="where">${p.where}</div></td>
+    <td data-label="Coordinates">${coord(p.coord,p.name)}</td>
+    <td data-label="Breeding">${breedCell(p)}</td></tr>`;}).join("");
+  emptyEl.style.display=list.length?"none":"block";
+  countEl.textContent=list.length+" of "+PALS.length+" Pals";
+  wireThumbs();
+}
+searchEl.addEventListener('input',e=>{query=e.target.value;renderWorkers();});
+renderWorkers();
+
+/* ---------- rankings ---------- */
+const RANKS=[
+ ["kindling",["Renjishi|Lv 8","Jormuntide Ignis|Lv 7","Ragnahawk / Blazehowl|Lv 3"]],
+ ["handiwork",["Solenne|Lv 8","Selyne / Anubis|Lv 4","Lunaris / Verdash|Lv 3"]],
+ ["mining",["Aegidron|Lv 8","Blazamut / Astegon|Lv 4","Digtoise / Anubis|Lv 3"]],
+ ["electric",["Orserk / Azurmane|Lv 4","Grizzbolt|Lv 3","Puffolt|+1 all"]],
+ ["planting",["Ophydia|Lv 7","Lyleen|Lv 4","Broncherry / Petallia|Lv 3"]],
+ ["watering",["Jormuntide|Lv 4","Faleris Aqua|Lv 4","Azurobe|Lv 3"]],
+ ["gathering",["Frostallion Noct|Lv 4","Verdash|Lv 3","Knocklem|Lv 3"]],
+ ["lumbering",["Celesdir|Lv 4","Hartalis|Lv 4","Prixter / Warsect|Lv 3"]],
+ ["medicine",["Bellanoir|Lv 4","Selyne|Lv 3","Vaelet / Lyleen|Lv 3"]],
+ ["cooling",["Frostallion|Lv 4","Whalaska|Lv 4","Bastigor|Lv 3"]],
+ ["transport",["Wumpo Botan|Lv 4","Knocklem|Lv 4","Mossanda / Beakon|Lv 3"]],
+ ["ranch",["Vixy|Spheres/Gold","Beegarde|Honey","Mozzarina|Milk"]],
+];
+document.getElementById('ranksGrid').innerHTML=RANKS.map(([job,list])=>{
+  const c=JOBS[job].c;
+  const items=list.map(s=>{const[names,lvl]=s.split("|");const linked=names.split(" / ").map(n=>pl(n.trim())).join(" / ");
+    return `<li>${linked}<span class="lvl">${lvl}</span></li>`;}).join("");
+  return `<div class="rank" style="--jc:${c}"><h3><span class="dot" style="--jc:${c}"></span>${JOBS[job].l}</h3><ol>${items}</ol></div>`;
+}).join("");
+
+/* ---------- type chart ---------- */
+const TYPES=[
+ ["Fire","fire","Grass, Ice","Water"],["Water","water","Fire","Electric"],["Electric","electric","Water","Ground"],
+ ["Ground","ground","Electric","Grass"],["Grass","grass","Ground","Fire"],["Ice","ice","Dragon","Fire"],
+ ["Dragon","dragon","Dark","Ice"],["Dark","dark","Neutral","Dragon"],["Neutral","neutral","—","Dark"],
+];
+document.getElementById('typeGrid').innerHTML=TYPES.map(([n,cls,strong,weak])=>`
+ <div class="typecard">
+   <div class="th"><span class="tn" style="color:var(--${cls})">${n}</span><span class="badge el-${cls}">${n}</span></div>
+   <div class="typerow"><span class="lab">Strong →</span><span class="strong-c">${strong}</span></div>
+   <div class="typerow"><span class="lab">Weak →</span><span class="weak-c">${weak}</span></div>
+ </div>`).join("");
+
+/* ---------- towers ---------- */
+const TOWERS=[
+ [1,"Zoe & Grizzbolt",10,"Grizzbolt","electric","Electric","Ground","Rayne Syndicate · Windswept Hills","112, -428"],
+ [2,"Lily & Lyleen",20,"Lyleen","grass","Grass","Fire","Free Pal Alliance","181, 30"],
+ [3,"Axel & Orserk",30,"Orserk","dragon","Electric / Dragon","Ice or Ground","Eternal Pyre · Mt Obsidian (heat armor)","-588, -514"],
+ [4,"Marcus & Faleris",40,"Faleris","fire","Fire","Water","PIDF Tower · Dessicated Desert","558, 332"],
+ [5,"Victor & Shadowbeak",50,"Shadowbeak","dark","Dark","Dragon","PAL Genetic Research Unit","-146, 450"],
+ [6,"Saya & Selyne",55,"Selyne","dark","Dark","Dragon","Moonflower Tower · Sakurajima","-602, 214"],
+ [7,"Bjorn & Bastigor",60,"Bastigor","ice","Ice","Fire","Feybreak Tower","-1288, -1665"],
+ [8,"Auri & Shaolong",68,"Shaolong","dragon","Water / Dragon","Ice or Electric","Azure Covenant · Sunreach",null],
+ [9,"Zenara & Astralym",80,"Astralym","neutral","Final boss","No weakness — endgame gear","World Tree",null],
+];
+document.getElementById('towerGrid').innerHTML=TOWERS.map(([i,who,lv,boss,cls,el,cnt,loc,co])=>`
+ <div class="tower" style="--tc:var(--${cls})">
+   <span class="idx">${String(i).padStart(2,'0')}</span>
+   <span class="who">${who}<span class="lvl">Lv ${lv}</span></span>
+   <span class="vs">${thumb(boss,`var(--${cls})`,true)}<span class="badge el-${cls}">${el}</span>${pl(boss)}</span>
+   <span class="cnt">Counter: <b>${cnt}</b></span>
+   <span style="flex-basis:100%;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:2px;">
+     <span class="where" style="max-width:none;font-size:12.5px;">${loc}</span>${coord(co,who)}
+   </span>
+ </div>`).join("");
+wireThumbs();
+
+/* ---------- food ---------- */
+const FOOD=[
+ ["Work Speed","var(--j-handiwork)",[["Dumud Chowder / Mozzarina Hamburger","+50% · slows hunger"],["Minestrone","+40% · all growable"],["Pizza","endgame · +work & Sanity"],["Salad / Chikipi Sauté","+30% · cheap"]]],
+ ["Attack","var(--ember)",[["Mozzarina Cheeseburger","+20% · all base-made"],["Eikthyrdeer Loco Moco","+20%"],["Omelet / Bacon 'n' Eggs","+10% · early"]]],
+ ["Defense","var(--sphere)",[["Galeclaw Nikujaga","+25% · best"],["Carbonara","+20%"],["Rushoar Hot Dog","+20%"]]],
+];
+document.getElementById('foodGrid').innerHTML=FOOD.map(([cat,c,items])=>`
+ <div class="rank" style="--jc:${c}"><h3><span class="dot" style="--jc:${c}"></span>${cat}</h3><ol>
+   ${items.map(([n,v])=>`<li>${n}<span class="lvl">${v}</span></li>`).join("")}
+ </ol></div>`).join("");
+
+/* ---------- fishing ---------- */
+document.getElementById('fishPals').innerHTML=["Gloopie","Solmora","Whalaska","Whalaska Ignis"].map(pl).join(" · ");
+const FISH=[
+ ["Fisherman's Point","Intermediate","-480, -747"],
+ ["Rayne Syndicate Oil Rig","Expert · swim in","572, -439"],
+ ["Feybreak Waterfall Pond","Master","-979, -979"],
+ ["Feybreak Shipwreck","Expert","-1387, -1471"],
+ ["Glacial Memento Islet","Expert","-1666, -983"],
+ ["Sunreach Frozen Lake","Expert · 5–6 Pals","-379, -1526"],
+ ["Sunreach Watchtower","Expert","-283, -1484"],
+ ["World Tree — Gilded City Ruins","Grand Master","-1872, 1349"],
+ ["World Tree — Central Waters","Grand Master · endgame gear","-1717, 1334"],
+];
+document.getElementById('fishRows').innerHTML=FISH.map(([name,tier,co])=>{
+  const q=encodeURIComponent(co);
+  const cls=tier.startsWith("Grand")?"strong-c":tier.startsWith("Master")?"":"";
+  return `<tr>
+   <td class="c-pal"><div class="pal" style="font-size:15px;">${name}</div></td>
+   <td data-label="Tier"><span class="lv" style="margin-top:0;font-size:12px;">${tier}</span></td>
+   <td data-label="Coordinates"><a class="loc" href="https://palworld-map.com/map?map=main&q=${q}" target="_blank" rel="noopener">${co}<span class="arrow">↗</span></a><span class="maptag">Open on map</span></td>
+  </tr>`;}).join("");
+</script>
+</body>
+</html>
