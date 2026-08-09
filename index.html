@@ -70,6 +70,8 @@
   .loc:hover{background:rgba(79,176,208,.16);border-color:var(--sphere);}
   .loc .arrow{opacity:.6;font-weight:400;}
   .loc.faint{color:var(--muted);background:rgba(147,160,148,.06);border-color:var(--line);}
+  .coordval{display:inline-block;font-family:"Space Mono",monospace;font-size:12.5px;font-weight:700;color:var(--sphere);
+    background:rgba(79,176,208,.07);border:1px solid rgba(79,176,208,.28);padding:6px 10px;border-radius:8px;}
 
   .badge{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.08em;
     text-transform:uppercase;padding:3px 8px;border-radius:5px;}
@@ -218,25 +220,25 @@
   <header class="hero">
     <p class="eyebrow">Palworld 1.0 · Pal Asylum</p>
     <h1>Field Guide<span class="sub">Everything for running the server — workers, breeding, combat, food & maps</span></h1>
-    <p class="lede">A complete Palworld 1.0 reference. Every <b>Pal name links to its picture &amp; stats</b>, and every <b>coordinate opens the interactive map</b> on the exact spot. Built for the crew.</p>
+    <p class="lede">A complete Palworld 1.0 reference. Every <b>Pal name and coordinate opens its wiki page</b> — picture, stats, breeding, and a spawn map with exact coordinates. Built for the crew.</p>
     <div class="patch">Updated for <b>1.0</b> · work suitability to Lv 10 · 9 tower bosses · fishing overhaul</div>
   </header>
 
   <!-- ============ MAP ============ -->
   <section id="map">
     <div class="sec-head"><span class="sec-num">01</span><h2>The Map</h2></div>
-    <p class="sec-sub">The full interactive map has every Pal spawn, Alpha, tower, dungeon, fishing spot and fast-travel point with exact coordinates. It can't be embedded directly here, but every coordinate chip on this page opens it on the right spot.</p>
+    <p class="sec-sub">Every Pal name and coordinate on this page opens that Pal's <b>wiki page</b> — picture, stats, breeding, and an interactive spawn map with exact coordinates. For one map of the whole island, use the full interactive map below.</p>
     <div class="maplink">
-      <p>45,000+ marker interactive map — search any Pal, filter day/night, and read exact coordinates. This is the same map every coordinate link below points to.</p>
+      <p>45,000+ marker interactive map — search any Pal, filter day/night, read exact coordinates. Heads up: fan map sites run ads, so browse with an ad blocker like <b>uBlock Origin</b> to avoid the fake "virus" pop-ups those ads can trigger.</p>
       <a class="btn" href="https://palworld-map.com/" target="_blank" rel="noopener">Open full map ↗</a>
     </div>
-    <p class="foot-note">Tip: tap any blue coordinate anywhere on this page to jump straight to that Pal or place.</p>
+    <p class="foot-note">Tip: tap any Pal name or blue coordinate to open its wiki page with the spawn map.</p>
   </section>
 
   <!-- ============ BASE WORKERS ============ -->
   <section id="workers">
     <div class="sec-head"><span class="sec-num">02</span><h2>Best Base Worker per Job</h2></div>
-    <p class="sec-sub">The single best Pal for each of the 12 base jobs — where it lives, its level, and how to breed it. <b>Tap a name</b> for its picture &amp; stats, <b>tap a coordinate</b> for the map.</p>
+    <p class="sec-sub">The single best Pal for each of the 12 base jobs — where it lives, its level, and how to breed it. <b>Tap a name or coordinate</b> for its wiki page — picture, stats, and a spawn map.</p>
     <div class="controls">
       <label class="search">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -269,7 +271,7 @@
   <!-- ============ TOWERS ============ -->
   <section id="towers">
     <div class="sec-head"><span class="sec-num">05</span><h2>Tower Bosses &amp; Counters</h2></div>
-    <p class="sec-sub">Nine towers in 1.0, in level order. The timer is now <b>5 minutes</b> (down from 10) with lower boss HP, so the right counter element and burst damage matter more than ever. <b>Tap a boss Pal</b> for its page, <b>tap coordinates</b> for the tower on the map.</p>
+    <p class="sec-sub">Nine towers in 1.0, in level order. The timer is now <b>5 minutes</b> (down from 10) with lower boss HP, so the right counter element and burst damage matter more than ever. <b>Tap a boss Pal or coordinate</b> for its wiki page.</p>
     <div class="grid" id="towerGrid" style="gap:12px;"></div>
   </section>
 
@@ -380,19 +382,18 @@
   </section>
 
   <footer>
-    Pal / location links → <a href="https://palworld-map.com/" target="_blank" rel="noopener">palworld-map.com</a> · breeding → <a href="https://game8.co/games/Palworld/archives/440530" target="_blank" rel="noopener">Game8</a><br/>
-    Coordinates are approximate in-game values — 1.0 moved several spawns, so the map link is the source of truth.<br/>
+    Pal pages &amp; art → <a href="https://palworld.wiki.gg/" target="_blank" rel="noopener">palworld.wiki.gg</a> · breeding → <a href="https://game8.co/games/Palworld/archives/440530" target="_blank" rel="noopener">Game8</a><br/>
+    Coordinates are approximate in-game values — 1.0 moved several spawns, so the wiki spawn map is the source of truth.<br/>
     Fan reference, not affiliated with Pocketpair · Built for Pal Asylum 🔥
   </footer>
 </div>
 
 <script>
-const MAPQ = "https://palworld-map.com/map?map=main&q=";
-const DB = "https://palworld-map.com/database/pals/";
-const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-const pl = n => `<a class="pl" href="${DB}${slug(n)}" target="_blank" rel="noopener">${n}</a>`;
-const palImg = n => `https://palworld.wiki.gg/wiki/Special:FilePath/${encodeURIComponent(n.trim()+' menu.png')}`;
-const thumb = (n,c,sm) => `<img class="thumb${sm?' sm':''}" src="${palImg(n)}" alt="${n}" loading="lazy" data-l="${n.trim()[0]}" data-c="${c}" data-sm="${sm?1:0}">`;
+const WIKI = "https://palworld.wiki.gg/wiki/";
+const wslug = n => n.trim().replace(/ /g,'_');
+const pl = n => `<a class="pl" href="${WIKI}${encodeURIComponent(wslug(n))}" target="_blank" rel="noopener">${n}</a>`;
+const palImg = n => {const f=encodeURIComponent(wslug(n)+'_icon.png');return `https://palworld.wiki.gg/images/thumb/${f}/128px-${f}`;};
+const thumb = (n,c,sm) => `<img class="thumb${sm?' sm':''}" src="${palImg(n)}" alt="${n}" loading="lazy" referrerpolicy="no-referrer" data-l="${n.trim()[0]}" data-c="${c}" data-sm="${sm?1:0}">`;
 function wireThumbs(){
   document.querySelectorAll('img.thumb').forEach(img=>{
     const fb=()=>{const s=document.createElement('span');s.className='thumb mono'+(img.dataset.sm==='1'?' sm':'');s.style.background=img.dataset.c;s.textContent=img.dataset.l;img.replaceWith(s);};
@@ -400,9 +401,9 @@ function wireThumbs(){
     if(img.complete && img.naturalWidth===0) fb();
   });
 }
-const coord = (c,q) => c
-  ? `<a class="loc" href="${MAPQ}${encodeURIComponent(q)}" target="_blank" rel="noopener">${c}<span class="arrow">↗</span></a><span class="maptag">Open on map</span>`
-  : `<a class="loc faint" href="${MAPQ}${encodeURIComponent(q)}" target="_blank" rel="noopener">Find on map<span class="arrow">↗</span></a><span class="maptag">Coordinate-only region</span>`;
+const coord = (c,q) => { const url=WIKI+encodeURIComponent(wslug(q)); return c
+  ? `<a class="loc" href="${url}" target="_blank" rel="noopener">${c}<span class="arrow">↗</span></a><span class="maptag">Location &amp; stats</span>`
+  : `<a class="loc faint" href="${url}" target="_blank" rel="noopener">See wiki<span class="arrow">↗</span></a><span class="maptag">Coordinate-only region</span>`; };
 
 /* ---------- jobs + workers ---------- */
 const JOBS={kindling:{l:"Kindling",c:"var(--j-kindling)"},handiwork:{l:"Handiwork",c:"var(--j-handiwork)"},
@@ -510,7 +511,7 @@ document.getElementById('towerGrid').innerHTML=TOWERS.map(([i,who,lv,boss,cls,el
    <span class="vs">${thumb(boss,`var(--${cls})`,true)}<span class="badge el-${cls}">${el}</span>${pl(boss)}</span>
    <span class="cnt">Counter: <b>${cnt}</b></span>
    <span style="flex-basis:100%;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:2px;">
-     <span class="where" style="max-width:none;font-size:12.5px;">${loc}</span>${coord(co,who)}
+     <span class="where" style="max-width:none;font-size:12.5px;">${loc}</span>${coord(co,boss)}
    </span>
  </div>`).join("");
 wireThumbs();
@@ -545,7 +546,7 @@ document.getElementById('fishRows').innerHTML=FISH.map(([name,tier,co])=>{
   return `<tr>
    <td class="c-pal"><div class="pal" style="font-size:15px;">${name}</div></td>
    <td data-label="Tier"><span class="lv" style="margin-top:0;font-size:12px;">${tier}</span></td>
-   <td data-label="Coordinates"><a class="loc" href="https://palworld-map.com/map?map=main&q=${q}" target="_blank" rel="noopener">${co}<span class="arrow">↗</span></a><span class="maptag">Open on map</span></td>
+   <td data-label="Coordinates"><span class="coordval">${co}</span><span class="maptag">Type into the in-game map</span></td>
   </tr>`;}).join("");
 </script>
 </body>
